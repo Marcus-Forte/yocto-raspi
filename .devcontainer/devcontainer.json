@@ -21,9 +21,12 @@
 	// Configure tool-specific properties.
 	// "customizations": {},
 	"workspaceMount": "source=${localWorkspaceFolder},target=/yocto,type=bind,consistency=cached",
-	"workspaceFolder": "/yocto"
+	"workspaceFolder": "/yocto",
 	
+	"mounts": [
+		"source=yocto-raspi-cache,target=/yocto/build,type=volume"
+	],
 
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "devcontainer"
+	"remoteUser": "builduser"
 }
