@@ -20,13 +20,20 @@
 
 	// Configure tool-specific properties.
 	// "customizations": {},
-	"workspaceMount": "source=${localWorkspaceFolder},target=/yocto,type=bind,consistency=cached",
-	"workspaceFolder": "/yocto",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/yocto/workspace,type=bind,consistency=cached",
+	"workspaceFolder": "/yocto/",
 	
 	"mounts": [
 		"source=yocto-raspi-cache,target=/yocto/build,type=volume"
 	],
 
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
-	"remoteUser": "builduser"
+	"remoteUser": "builduser",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"yocto-project.yocto-bitbake"
+			]
+		}
+	}
 }

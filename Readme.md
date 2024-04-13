@@ -4,7 +4,6 @@ Simple, minimal example on building <custom> raspberrypi5 images.
 
 ## Usage
 
-1. `git submodule update --init`
-2. Open/build dev container.
-3. source poky/oe-init-build-env
-4. bitbake core-image-base
+1. Open folder in container.
+2. Add layers.
+3. If rpi-linux fails fetching, look into the log and manually run the git clone.
