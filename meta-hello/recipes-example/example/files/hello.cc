@@ -1,7 +1,6 @@
 #include <iostream>
 
-
 int main() {
-    std::cout << "Hello from yocto!" << std::endl;
+    std::cout << "Hello TU/e!!!" << std::endl;
     return 0;
 }

@@ -15,4 +15,19 @@ Simple, minimal example on building <custom> raspberrypi5 images.
 
 Add to `bblayers.conf`:
 
-- `IMAGE_INSTALL:append = " hellocmake cmake bash apt dpkg"`
+- `IMAGE_INSTALL:append = " hellocmake cmake bash"`
+
+Add to `local.conf`
+
+- `IMAGE_ROOTFS_EXTRA_SPACE:append = " + 8000000"`
+
+## Image
+- Fix /etc/resolv.conf
+
+
+### DNF example
+[MyRepo]
+name=My Repository
+baseurl=http://mirror.transip.net/fedora/fedora/releases/39/Server/x86_64/os/
+enabled=1
+gpgcheck=0
