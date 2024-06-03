@@ -5,29 +5,19 @@ Simple, minimal example on building <custom> raspberrypi5 images.
 ## Usage
 
 1. Open folder in container.
-2. Add this layer in bitbake.
-3. Select add `MACHINE ?= "raspberrypi5"`
-4. `bitbake core-image-base`
+2. `source /yocto/poky/oe-init-build-env` for raspberry || `source /yocto/poky/oe-init-build-env build-qemu` for qemu.
+3. Add this layer in bitbake: `bitbake-layers add-layer /yocto/workspace/meta-hello/`
+4. Select add `MACHINE ?= "raspberrypi5"` for raspberry image.
+5. `bitbake my-img`
  - If problem downloading kernel occurs, look into the log for the
  git command and simply run it from a terminal manually.
 
 ## Config
 
-Add to `bblayers.conf`:
+At `local.conf`:
+- Pick any machine.
+- Use `DISTRO ?= "marcus"`
 
-- `IMAGE_INSTALL:append = " hellocmake cmake bash"`
+## Build
 
-Add to `local.conf`
-
-- `IMAGE_ROOTFS_EXTRA_SPACE:append = " + 8000000"`
-
-## Image
-- Fix /etc/resolv.conf
-
-
-### DNF example
-[MyRepo]
-name=My Repository
-baseurl=http://mirror.transip.net/fedora/fedora/releases/39/Server/x86_64/os/
-enabled=1
-gpgcheck=0
+- `bitbake my-img`

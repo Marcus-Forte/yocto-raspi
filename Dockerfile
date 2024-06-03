@@ -16,7 +16,9 @@ RUN locale-gen en_US.UTF-8
 RUN useradd -ms /bin/bash builduser -g root -G sudo && echo "builduser:password" | chpasswd
 
 RUN mkdir /yocto && chown builduser /yocto && \
-    mkdir /yocto/build && chown builduser /yocto/build
+    mkdir /yocto/build && chown builduser /yocto/build && \
+    mkdir /yocto/build-qemu && chown builduser /yocto/build-qemu
 
 USER builduser 
-RUN cd /yocto && git clone -b kirkstone git://git.yoctoproject.org/poky && git clone -b kirkstone https://git.yoctoproject.org/meta-raspberrypi
+RUN cd /yocto && git clone -b kirkstone git://git.yoctoproject.org/poky && \
+    git clone -b kirkstone https://git.yoctoproject.org/meta-raspberrypi
