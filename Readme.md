@@ -21,3 +21,7 @@ At `local.conf`:
 ## Build
 
 - `bitbake my-img`
+
+## Qemu
+If a qemu machine was chosen, use (from docker):
+- `runqemu slirp nographics`

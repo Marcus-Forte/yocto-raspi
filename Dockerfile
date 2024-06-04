@@ -1,6 +1,7 @@
 FROM ubuntu:latest
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG YOCTO_BRANCH=kirkstone
 
 # build tools
 RUN apt-get update && apt-get install -y gawk wget git diffstat \
@@ -20,5 +21,6 @@ RUN mkdir /yocto && chown builduser /yocto && \
     mkdir /yocto/build-qemu && chown builduser /yocto/build-qemu
 
 USER builduser 
-RUN cd /yocto && git clone -b kirkstone git://git.yoctoproject.org/poky && \
-    git clone -b kirkstone https://git.yoctoproject.org/meta-raspberrypi
+RUN cd /yocto && git clone -b ${YOCTO_BRANCH} git://git.yoctoproject.org/poky && \
+    git clone -b ${YOCTO_BRANCH} https://git.yoctoproject.org/meta-raspberrypi && \
+    git clone -b ${YOCTO_BRANCH} https://github.com/OE4T/meta-tegra.git
