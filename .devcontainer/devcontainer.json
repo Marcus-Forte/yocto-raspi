@@ -6,7 +6,8 @@
 		// Sets the run context to one level up instead of the .devcontainer folder.
 		"context": "..",
 		// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
-		"dockerfile": "../Dockerfile"
+		"dockerfile": "../Dockerfile",
+		"args": { "YOCTO_BRANCH": "scarthgap" }
 	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
@@ -24,8 +25,7 @@
 	"workspaceFolder": "/yocto/",
 	
 	"mounts": [
-		"source=yocto-raspi-cache,target=/yocto/build,type=volume",
-		"source=yocto-raspi-cache-qemu,target=/yocto/build-qemu,type=volume"
+		"source=yocto-raspi-cache,target=/yocto/build,type=volume"
 	],
 
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
