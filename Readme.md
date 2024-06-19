@@ -27,8 +27,21 @@ At `local.conf`:
 - `bitbake my-img`
 
 ## Qemu
+
 If a qemu machine was chosen, use (from dev container):
 - `runqemu slirp nographics`
+
+## Deploy
+
+If you produce an image for a Raspberry board, make sure you copy them out of the container:
+- `docker cp <container_id>:/yocto/build/tmp/deploy/images/<machine>/<image>.wic.gz .`
+Example: `docker cp -L a7ac:/yocto/build/tmp/deploy/images/raspberrypi5/my-img-raspberrypi5.rootfs-20240619160220.wic.bz2 .`
+
+Then, extract to disk. Example:
+- `bzip2 -cd my-img-raspberrypi5.rootfs-20240619160220.wic.bz2 | sudo dd of=/dev/disk5 bs=10M status=progress`
+
+## Access
+The machine should be SSH accessible from a static ip: `192.168.1.10`. Make sure the host device has an IP in range.
 
 ## TODO
 
