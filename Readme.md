@@ -41,8 +41,12 @@ Then, extract to disk. Example:
 - `bzip2 -cd my-img-raspberrypi5.rootfs-20240619160220.wic.bz2 | sudo dd of=/dev/disk5 bs=10M status=progress`
 
 ## Access
+
 The machine should be SSH accessible from a static ip: `192.168.1.10`. Make sure the host device has an IP in range.
 
+### Wifi Hotspot
+https://wiki.somlabs.com/index.php/Connecting_to_WiFi_network_using_systemd_and_wpa-supplicant
 ## TODO
 
 - Nvidia Jetson Nano images.
+https://raspberrypi.stackexchange.com/questions/100195/automatically-create-hotspot-if-no-network-is-available

@@ -1,0 +1,12 @@
+[Match]
+Name=wlan*
+
+[Network]
+Address=192.168.2.1/24
+DHCPServer=yes
+
+[DHCPServer]
+PoolOffset=100
+PoolSize=20
+EmitDNS=yes
+DNS=8.8.8.8

@@ -19,4 +19,8 @@ SRC_URI = "file://hello.cc \
 
 S = "${WORKDIR}"
 
+PACKAGECONFIG ??= "CONFIG_A CONFIG_B"
+PACKAGECONFIG[CONFIG_A] = "-DCONFIG_A=ON,-DCONFIG_A=OFF"
+PACKAGECONFIG[CONFIG_B] = "-DCONFIG_B=ON,-DCONFIG_B=OFF"
+
 addtask display_banner before do_build
