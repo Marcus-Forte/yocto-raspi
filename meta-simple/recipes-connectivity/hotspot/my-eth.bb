@@ -9,10 +9,10 @@ RDEPENDS:${PN} = "systemd"
 SRC_URI = "file://10-eth.network \ 
 "
 
-FILES:${PN} = "${sysconfdir}/systemd/network/10-eth.network"
+FILES:${PN} = "${systemd_unitdir}/network/10-eth.network"
 
 do_install:append() {
-    install -d ${D}${sysconfdir}/systemd/network
-    install -m 0644 ${WORKDIR}/10-eth.network ${D}${sysconfdir}/systemd/network
+    install -d ${D}${systemd_unitdir}/network
+    install -m 0644 ${WORKDIR}/10-eth.network ${D}${systemd_unitdir}/network
 }
 

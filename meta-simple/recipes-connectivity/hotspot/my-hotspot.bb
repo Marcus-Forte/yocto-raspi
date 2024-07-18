@@ -5,14 +5,14 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 inherit systemd
 # TODO how to depend on systemd-networkd (packageconfig)
-RDEPENDS:${PN} = "systemd wpa-supplicant" 
+RDEPENDS:${PN} = "systemd wpa-supplicant connman" 
 
 SRC_URI = "file://20-wlan.network \ 
 file://wpa_supplicant-wlan0.conf \
 file://enable-wifi.service \
 "
 
-FILES:${PN} = "${sysconfdir}/systemd/network/20-wlan.network \
+FILES:${PN} = "${systemd_unitdir}/network/20-wlan.network \
     ${sysconfdir}/wpa_supplicant/wpa_supplicant-wlan0.conf \
     ${systemd_system_unitdir}/enable-wifi.service \
 "
@@ -22,8 +22,8 @@ SYSTEMD_SERVICE:${PN} = "enable-wifi.service"
 # TODO enable `wpa_supplicant@wlan0` as default in image.
 
 do_install:append() {
-    install -d ${D}${sysconfdir}/systemd/network
-    install -m 0644 ${WORKDIR}/20-wlan.network ${D}${sysconfdir}/systemd/network
+    install -d ${D}${systemd_unitdir}/network
+    install -m 0644 ${WORKDIR}/20-wlan.network ${D}${systemd_unitdir}/network
 
     install -d ${D}${sysconfdir}/wpa_supplicant
     install -m 0644 ${WORKDIR}/wpa_supplicant-wlan0.conf ${D}${sysconfdir}/wpa_supplicant

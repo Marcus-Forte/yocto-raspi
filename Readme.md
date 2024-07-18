@@ -45,7 +45,11 @@ Then, extract to disk. Example:
 The machine should be SSH accessible from a static ip: `192.168.1.10`. Make sure the host device has an IP in range.
 
 ### Wifi Hotspot
-https://wiki.somlabs.com/index.php/Connecting_to_WiFi_network_using_systemd_and_wpa-supplicant
+- https://wiki.somlabs.com/index.php/Connecting_to_WiFi_network_using_systemd_and_wpa-supplicant
+
+## Kernel modifications
+- https://wiki.koansoftware.com/index.php/Modify_the_linux_kernel_with_configuration_fragments_in_Yocto
+
 ## TODO
 
 - Nvidia Jetson Nano images.
