@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Copy linux images",
+            "type": "shell",
+            "command": "rm -rf ${workspaceFolder}/workspace/build/* && cp -d ${workspaceFolder}/build/tmp/deploy/images/raspberrypi5/*rootfs-*.wic.bz2 ${workspaceFolder}/workspace/build",
+            "problemMatcher": []
+        }
+    ]
+}

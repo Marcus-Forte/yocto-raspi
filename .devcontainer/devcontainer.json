@@ -38,5 +38,7 @@
 				"ms-python.python"
 			]
 		}
-	}
+	},
+
+	"postStartCommand": "cp -r /yocto/workspace/.vscode /yocto"
 }
