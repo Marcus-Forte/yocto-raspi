@@ -29,7 +29,7 @@ At `local.conf`:
 ## Qemu
 
 If a qemu machine was chosen, use (from dev container):
-- `runqemu slirp nographics`
+- `runqemu slirp nographic`
 
 ## Deploy
 
