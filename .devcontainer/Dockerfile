@@ -19,8 +19,10 @@ RUN useradd -ms /bin/bash builduser -g root -G sudo && echo "builduser:password"
 RUN mkdir /yocto && chown builduser /yocto && \
     mkdir /yocto/build && chown builduser /yocto/build
 
+# Some older distros are intentional
 USER builduser 
 RUN cd /yocto && git clone -b ${YOCTO_BRANCH} https://git.yoctoproject.org/poky && \
     git clone -b ${YOCTO_BRANCH} https://git.yoctoproject.org/meta-raspberrypi && \
     git clone -b ${YOCTO_BRANCH} https://github.com/OE4T/meta-tegra.git && \
     git clone -b ${YOCTO_BRANCH} git://git.openembedded.org/meta-openembedded
+

@@ -18,7 +18,7 @@ FILES:${PN} = "${systemd_unitdir}/network/20-wlan.network \
 "
 
 SYSTEMD_SERVICE:${PN} = "enable-wifi.service"
-
+SYSTEMD_AUTO_ENABLE = "enable"
 # TODO enable `wpa_supplicant@wlan0` as default in image.
 
 do_install:append() {
