@@ -46,8 +46,12 @@ The machine should be SSH accessible from a static ip: `192.168.1.10`. Make sure
 
 ### Wifi Hotspot
 - https://wiki.somlabs.com/index.php/Connecting_to_WiFi_network_using_systemd_and_wpa-supplicant
-- Disabled at boot by default. Once logged in, simply type `systemctl enable wpa_supplicant@wlan0`
+- Wifi is disabled at boot by default. Once logged in, simply type `systemctl enable wpa_supplicant@wlan0`
 - See https://lists.yoctoproject.org/g/yocto/topic/enable/61338089
+- Details: https://man.archlinux.org/man/systemd.network.5
+
+### Wifi client
+- After image is deployed, change `ssid` and `psk` fields of `/etc/wpa_supplicant/wpa_supplicant-wlan0.conf` and restart wpa_supplicant service.
 
 ## Kernel modifications
 - https://wiki.koansoftware.com/index.php/Modify_the_linux_kernel_with_configuration_fragments_in_Yocto
