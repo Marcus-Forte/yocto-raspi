@@ -55,8 +55,10 @@ The machine should be SSH accessible from a static ip: `192.168.1.10`. Make sure
 
 ## Kernel modifications
 - https://wiki.koansoftware.com/index.php/Modify_the_linux_kernel_with_configuration_fragments_in_Yocto
+- https://docs.yoctoproject.org/kernel-dev/index.html#:~:text=Table%20of%20Contents.%201%20Introduction.%201.1
+- `bitbake -c menuconfig virtual/kernel`
 
-## TODO
+## SWUpdate ( Work in progress )
 
-- Nvidia Jetson Nano images.
-https://raspberrypi.stackexchange.com/questions/100195/automatically-create-hotspot-if-no-network-is-available
+`.swu` files are generated when installing `swupdate` package. To update from within the system, use this as reference:
+- `swupdate -i my-img-raspberrypi5.rootfs.swu -H a:1.0 -v -e stable,copy1`
