@@ -17,7 +17,8 @@ SRC_URI = "file://hello.cc \
            file://CMakeLists.txt \
           "
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/sources"
+UNPACKDIR = "${S}"
 
 PACKAGECONFIG ??= "CONFIG_A CONFIG_B"
 PACKAGECONFIG[CONFIG_A] = "-DCONFIG_A=ON,-DCONFIG_A=OFF"

@@ -14,15 +14,13 @@ liblz4-tool file locales libacl1 sudo vim tmux
 
 RUN locale-gen en_US.UTF-8
 
-RUN useradd -ms /bin/bash builduser -g root -G sudo && echo "builduser:password" | chpasswd
+RUN useradd -ms /bin/bash builduser -G sudo && echo "builduser:password" | chpasswd
 
 RUN mkdir /yocto && chown builduser /yocto && \
     mkdir /yocto/build && chown builduser /yocto/build
 
 USER builduser 
 RUN cd /yocto && git clone -b ${YOCTO_BRANCH} https://git.yoctoproject.org/poky && \
-    git clone -b ${YOCTO_BRANCH} https://git.yoctoproject.org/meta-raspberrypi && \
+    git clone -b master https://git.yoctoproject.org/meta-raspberrypi && \ 
     # git clone -b ${YOCTO_BRANCH} https://github.com/OE4T/meta-tegra.git && \
-    git clone -b ${YOCTO_BRANCH} git://git.openembedded.org/meta-openembedded && \
-    git clone -b ${YOCTO_BRANCH} https://github.com/sbabic/meta-swupdate.git && \
-    git clone -b scarthgap/u-boot https://git.yoctoproject.org/meta-lts-mixins
+    git clone -b ${YOCTO_BRANCH} git://git.openembedded.org/meta-openembedded

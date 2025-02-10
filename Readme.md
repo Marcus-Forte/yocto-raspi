@@ -1,6 +1,6 @@
 # Yocyo-raspi
 
-Simple, minimal example on building _custom_ Raspberryp 5 images.
+Simple, minimal (attempt) example on building _custom_ Raspberryp 5 images.
 Produces an image with a very simple distro with systemd, and console interface.
 
 ## Usage
@@ -9,10 +9,11 @@ Produces an image with a very simple distro with systemd, and console interface.
 2. `source /yocto/poky/oe-init-build-env`.
 3. Add this layers with bitbake: 
 - `bitbake-layers add-layer /yocto/workspace/meta-simple/`
-- `bitbake-layers add-layer /yocto/workspace/meta-raspberrypi`
+- `bitbake-layers add-layer /yocto/meta-openembedded/meta-oe/`
+- `bitbake-layers add-layer /yocto/meta-raspberrypi/`
 4. Change `build/local.conf` file:
 - Add `MACHINE ?= "raspberrypi5"` for raspberry image or any qemu.
-- Add `DISTRO ?= "myimg"` for the custom distro.
+- Add `DISTRO ?= "simple"` for the custom distro.
  
  
 NOTE: If problem downloading kernel occurs, look into the log for the git command and simply run it from a terminal manually.

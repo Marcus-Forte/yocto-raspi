@@ -18,6 +18,8 @@ FILES:${PN} = "${systemd_unitdir}/network/20-wifi.network \
     ${sysconfdir}/wpa_supplicant/wpa_supplicant-wlan0.conf \
     ${systemd_system_unitdir}/enable-wifi.service \
 "
+S = "${WORKDIR}/sources"
+UNPACKDIR = "${S}"
 
 SYSTEMD_SERVICE:${PN} = "enable-wifi.service"
 SYSTEMD_AUTO_ENABLE = "enable"
@@ -25,12 +27,12 @@ SYSTEMD_AUTO_ENABLE = "enable"
 
 do_install() {
     install -d ${D}${systemd_unitdir}/network
-    install -m 0644 ${WORKDIR}/20-wifi.network ${D}${systemd_unitdir}/network
-    install -m 0644 ${WORKDIR}/20-hotspot.network ${D}${systemd_unitdir}/network
+    install -m 0644 ${S}/20-wifi.network ${D}${systemd_unitdir}/network
+    install -m 0644 ${S}/20-hotspot.network ${D}${systemd_unitdir}/network
 
     install -d ${D}${sysconfdir}/wpa_supplicant
-    install -m 0644 ${WORKDIR}/wpa_supplicant-wlan0.conf ${D}${sysconfdir}/wpa_supplicant
+    install -m 0644 ${S}/wpa_supplicant-wlan0.conf ${D}${sysconfdir}/wpa_supplicant
 
     install -d ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/enable-wifi.service ${D}${systemd_system_unitdir}
+    install -m 0644 ${S}/enable-wifi.service ${D}${systemd_system_unitdir}
 }
