@@ -40,13 +40,18 @@ S = "${WORKDIR}/git"
 #       (this is based on recipes that have previously been built and packaged)
 # NOTE: the following library dependencies are unknown, ignoring: irc S vulkan sleef svml REQUIRED ze_loader
 #       (this is based on recipes that have previously been built and packaged)
-DEPENDS = "opencl-icd-loader clang-native"
+DEPENDS = "virtual/opencl-icd clang-native pkgconfig spirv-llvm-translator"
 
 RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp"
 
 inherit cmake pkgconfig
 
 # Specify any options you want to pass to cmake using EXTRA_OECMAKE:
-EXTRA_OECMAKE = "-DENABLE_ICD=ON -DLLC_TRIPLE=aarch64-linux-gnu -DLLC_HOST_CPU=cortex-a76 -DCLANG_MARCH_FLAG=-mcpu= -DENABLE_TESTS=OFF"
+EXTRA_OECMAKE = "-DENABLE_ICD=ON -DLLC_TRIPLE=aarch64-linux-gnu -DCLANG_MARCH_FLAG=-mcpu= -DENABLE_TESTS=OFF"
+
+# Conditionally set -DLLC_HOST_CPU based on the machine
+EXTRA_OECMAKE:append:qemuarm64 = " -DLLC_HOST_CPU=A"
+EXTRA_OECMAKE:append:qemux86-64 = " -DLLC_HOST_CPU=B"
+EXTRA_OECMAKE:append:yourmachine = " -DLLC_HOST_CPU=C"
 
 INSANE_SKIP:${PN} += "buildpaths"
