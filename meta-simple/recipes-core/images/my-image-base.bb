@@ -13,4 +13,4 @@ SWUPDATE_IMAGES_FSTYPES[my-img-raspberrypi5.rootfs] = ".ext4.gz"
 
 IMAGE_FEATURES:append = " ssh-server-openssh"
 # Add 500MB to rootfs.
-IMAGE_ROOTFS_EXTRA_SPACE:append = " + 500000" 
+IMAGE_ROOTFS_EXTRA_SPACE:append = " + 1000000" 
