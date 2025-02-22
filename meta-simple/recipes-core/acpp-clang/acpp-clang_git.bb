@@ -27,10 +27,23 @@ S = "${WORKDIR}/git"
 # NOTE: unable to map the following CMake package dependencies: CUDA HIP LLVM OpenCL Filesystem
 # NOTE: the following library dependencies are unknown, ignoring: LLVM- Y LLVM hiprtc
 #       (this is based on recipes that have previously been built and packaged)
-DEPENDS = "boost"
+DEPENDS = "boost-native clang-native"
+
+RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp"
+
+FILES:${PN} += "${libdir}/hipSYCL/librt-backend-omp.so \
+    ${libdir}/hipSYCL/bitcode/libkernel-sscp-*.bc \
+    ${libdir}/hipSYCL/llvm-to-backend/libllvm-to-host.so \
+    ${libdir}/hipSYCL/llvm-to-backend/libllvm-to-backend.so \
+    ${libdir}/hipSYCL/llvm-to-backend/llvm-to-host-tool \
+    ${sysconfdir}/AdaptiveCpp/acpp-core.json \
+    ${prefix}/etc/AdaptiveCpp/acpp-core.json"
 
 inherit cmake
 
 # Specify any options you want to pass to cmake using EXTRA_OECMAKE:
 EXTRA_OECMAKE = ""
 
+INSANE_SKIP:${PN} = "buildpaths dev-deps"
+INSANE_SKIP:${PN}-dbg = "buildpaths"
+INSANE_SKIP:${PN}-dev = "dev-elf"
