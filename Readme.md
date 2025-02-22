@@ -3,6 +3,10 @@
 Simple, minimal (attempt) example on building _custom_ Raspberryp 5 images.
 Produces an image with a very simple distro with systemd, and console interface.
 
+## Tips
+
+* `https://wiki.yoctoproject.org/wiki/TipsAndTricks/Patching_the_source_for_a_recipe`
+
 ## Usage
 
 1. Open folder in dev container.

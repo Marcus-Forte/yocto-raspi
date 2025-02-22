@@ -40,9 +40,9 @@ S = "${WORKDIR}/git"
 #       (this is based on recipes that have previously been built and packaged)
 # NOTE: the following library dependencies are unknown, ignoring: irc S vulkan sleef svml REQUIRED ze_loader
 #       (this is based on recipes that have previously been built and packaged)
-DEPENDS += " ocl-icd-native opencl-headers hwloc clang-native spirv-llvm-translator-native"
+DEPENDS += "ocl-icd-native opencl-headers hwloc clang-native spirv-llvm-translator-native"
 
-RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp"
+RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp virtual-opencl-icd"
 
 inherit cmake pkgconfig
 
@@ -59,3 +59,7 @@ INSANE_SKIP:${PN} += "buildpaths"
 do_configure:prepend() {
     export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${STAGING_LIBDIR_NATIVE}/pkgconfig:${STAGING_DIR_NATIVE}/usr/share/pkgconfig"
 }
+
+# Mot sure why those are needed. This configuration is supposed to be resolved.
+CFLAGS += " -I${STAGING_INCDIR_NATIVE}"
+CXXFLAGS += " -I${STAGING_INCDIR_NATIVE}"
