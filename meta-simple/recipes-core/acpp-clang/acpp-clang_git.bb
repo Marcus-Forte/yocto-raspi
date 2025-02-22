@@ -35,7 +35,7 @@ do_configure[network] = "1"
 #       (this is based on recipes that have previously been built and packaged)
 DEPENDS = "boost-native clang-native ocl-icd-native opencl-headers spirv-llvm-translator-native"
 
-RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp virtual-opencl-icd"
+RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp virtual-opencl-icd spirv-llvm-translator"
 
 inherit cmake pkgconfig
 
