@@ -38,6 +38,8 @@ RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp virtual-opencl-icd"
 
 inherit cmake pkgconfig
 
+# TODO how to prevent SPIRV from compiling
+
 FILES:${PN} += "${libdir}/hipSYCL/librt-backend-omp.so \
     ${libdir}/hipSYCL/bitcode/libkernel-sscp-*.bc \
     ${libdir}/hipSYCL/llvm-to-backend/libllvm-to-host.so \
@@ -48,6 +50,12 @@ FILES:${PN} += "${libdir}/hipSYCL/librt-backend-omp.so \
     ${libdir}/hipSYCL/llvm-to-backend/llvm-to-spirv-tool \
     ${libdir}/hipSYCL/librt-backend-ocl.so \
     ${libdir}/hipSYCL/librt-backend-omp.so \
+    ${libdir}/hipSYCL/ext/llvm-spirv/bin/llvm-spirv \
+    ${libdir}/hipSYCL/ext/llvm-spirv/include/LLVMSPIRVLib/LLVMSPIRVOpts.h \
+    ${libdir}/hipSYCL/ext/llvm-spirv/include/LLVMSPIRVLib/LLVMSPIRVLib.h \
+    ${libdir}/hipSYCL/ext/llvm-spirv/include/LLVMSPIRVLib/LLVMSPIRVExtensions.inc \
+    ${libdir}/hipSYCL/ext/llvm-spirv/lib/libLLVMSPIRVLib.a \
+    ${libdir}/hipSYCL/ext/llvm-spirv/lib/pkgconfig/LLVMSPIRVLib.pc \
     ${sysconfdir}/AdaptiveCpp/acpp-core.json \
     ${prefix}/etc/AdaptiveCpp/acpp-core.json"
 
@@ -59,7 +67,7 @@ do_configure:prepend() {
     export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${STAGING_LIBDIR_NATIVE}/pkgconfig:${STAGING_DIR_NATIVE}/usr/share/pkgconfig"
 }
 
-INSANE_SKIP:${PN} = "buildpaths dev-deps"
+INSANE_SKIP:${PN} = "buildpaths dev-deps staticdev"
 INSANE_SKIP:${PN}-dbg = "buildpaths"
 INSANE_SKIP:${PN}-dev = "dev-elf"
 
