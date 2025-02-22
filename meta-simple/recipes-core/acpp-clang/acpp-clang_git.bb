@@ -17,7 +17,6 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=a10c5f7fe245e681d23c8bd9fdd4f580 \
                     file://include/hipSYCL/sycl/libkernel/detail/fp16/LICENSE;md5=998fb0b16ad8a4fb8bd41bf3faf2d21c"
 
 SRC_URI = "git://github.com/AdaptiveCpp/AdaptiveCpp.git;protocol=https;branch=develop \
-           file://0001-removed-empty-target.patch \
            "
 
 # Modify these as desired
@@ -33,9 +32,9 @@ do_configure[network] = "1"
 # NOTE: unable to map the following CMake package dependencies: CUDA HIP LLVM OpenCL Filesystem
 # NOTE: the following library dependencies are unknown, ignoring: LLVM- Y LLVM hiprtc
 #       (this is based on recipes that have previously been built and packaged)
-DEPENDS = "boost-native clang-native ocl-icd-native opencl-headers spirv-llvm-translator-native"
+DEPENDS = "boost-native clang-native ocl-icd-native opencl-headers spirv-tools"
 
-RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp virtual-opencl-icd spirv-llvm-translator"
+RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp virtual-opencl-icd"
 
 inherit cmake pkgconfig
 
@@ -54,7 +53,7 @@ FILES:${PN} += "${libdir}/hipSYCL/librt-backend-omp.so \
 
 
 # Specify any options you want to pass to cmake using EXTRA_OECMAKE:
-EXTRA_OECMAKE = "-DWITH_OPENCL_BACKEND=ON -DFETCHCONTENT_FULLY_DISCONNECTED=OFF -DWITH_SSCP_COMPILER=ON -DWITH_LLVM_TO_SPIRV=OFF"
+EXTRA_OECMAKE = "-DWITH_OPENCL_BACKEND=ON -DFETCHCONTENT_FULLY_DISCONNECTED=OFF -DWITH_SSCP_COMPILER=ON"
 
 do_configure:prepend() {
     export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${STAGING_LIBDIR_NATIVE}/pkgconfig:${STAGING_DIR_NATIVE}/usr/share/pkgconfig"
@@ -63,3 +62,9 @@ do_configure:prepend() {
 INSANE_SKIP:${PN} = "buildpaths dev-deps"
 INSANE_SKIP:${PN}-dbg = "buildpaths"
 INSANE_SKIP:${PN}-dev = "dev-elf"
+
+# Mot sure why those are needed. This configuration is supposed to be resolved.
+# Apparently sysroot are not forwarded to recipe-internal invocations of the compiler (e.g FetchContent, build, etc.)
+CFLAGS += " --sysroot=${RECIPE_SYSROOT}"
+CXXFLAGS += " --sysroot=${RECIPE_SYSROOT}"
+LDFLAGS += " --sysroot=${RECIPE_SYSROOT}"
