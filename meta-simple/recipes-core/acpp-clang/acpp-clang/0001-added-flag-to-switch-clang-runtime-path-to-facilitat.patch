@@ -1,0 +1,31 @@
+From f04319db553fede5844923041a2517be1aa4929f Mon Sep 17 00:00:00 2001
+From: Marcus Forte <davi2812@hotmail.com>
+Date: Sat, 22 Feb 2025 23:25:51 +0000
+Subject: [PATCH] added flag to switch clang runtime path to facilitate
+ cross-compilation
+
+Upstream-Status: Inappropriate [oe specific]
+---
+ src/compiler/llvm-to-backend/CMakeLists.txt | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/src/compiler/llvm-to-backend/CMakeLists.txt b/src/compiler/llvm-to-backend/CMakeLists.txt
+index 741c2ef5..7070c3ee 100644
+--- a/src/compiler/llvm-to-backend/CMakeLists.txt
++++ b/src/compiler/llvm-to-backend/CMakeLists.txt
+@@ -223,8 +223,14 @@ if(WITH_SSCP_COMPILER)
+       LIBRARY host/LLVMToHost.cpp host/HostKernelWrapperPass.cpp
+       TOOL host/LLVMToHostTool.cpp)
+ 
++    if(NOT DEFINED CLANG_RUNTIME_PATH)
++      set(CLANG_RUNTIME_PATH ${CLANG_EXECUTABLE_PATH})
++    endif()
++
++    message(STATUS "Using clang runtime path: ${CLANG_RUNTIME_PATH}")
++
+     target_compile_definitions(llvm-to-host PRIVATE
+-      -DHIPSYCL_CLANG_PATH="${CLANG_EXECUTABLE_PATH}" 
++      -DHIPSYCL_CLANG_PATH="${CLANG_RUNTIME_PATH}" 
+       -DHIPSYCL_HOST_CPU_FLAG="${HOST_CPU_FLAG}")
+     target_link_libraries(llvm-to-host PRIVATE acpp-clang-cbs)
+   endif()
