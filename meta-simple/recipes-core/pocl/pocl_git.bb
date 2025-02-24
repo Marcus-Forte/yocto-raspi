@@ -42,14 +42,12 @@ S = "${WORKDIR}/git"
 #       (this is based on recipes that have previously been built and packaged)
 DEPENDS += "ocl-icd-native opencl-headers hwloc clang-native spirv-llvm-translator-native"
 
-RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp virtual-opencl-icd spirv-llvm-translator"
+RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp clang virtual-opencl-icd spirv-llvm-translator"
 
 inherit cmake pkgconfig
 
-# Specify any options you want to pass to cmake using EXTRA_OECMAKE:
 EXTRA_OECMAKE = "-DENABLE_ICD=ON -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release"
 
-# Conditionally set -DLLC_HOST_CPU based on the machine
 # EXTRA_OECMAKE:append:qemuarm64 = " -DLLC_HOST_CPU=A"
 # EXTRA_OECMAKE:append:qemux86-64 = " -DLLC_HOST_CPU=B"
 EXTRA_OECMAKE:append:raspberrypi5 = " -DLLC_TRIPLE=aarch64-linux-gnu -DLLC_HOST_CPU=cortex-a76 -DCLANG_MARCH_FLAG=-mcpu="
@@ -63,3 +61,8 @@ do_configure:prepend() {
 # Mot sure why those are needed. This configuration is supposed to be resolved.
 CFLAGS += " -I${STAGING_INCDIR_NATIVE}"
 CXXFLAGS += " -I${STAGING_INCDIR_NATIVE}"
+
+
+# Important envs to set in runtime
+# - `POCL_PATH_CLANG`
+# - `POCL_PATH_LLVM_SPIRV`

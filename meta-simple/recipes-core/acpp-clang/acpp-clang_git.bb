@@ -20,7 +20,6 @@ SRC_URI = "git://github.com/AdaptiveCpp/AdaptiveCpp.git;protocol=https;branch=de
            file://0001-added-flag-to-switch-clang-runtime-path-to-facilitat.patch \
            "
 
-# Modify these as desired
 PV = "1.0+git"
 SRCREV = "v24.10.0"
 
@@ -31,33 +30,34 @@ do_configure[network] = "1"
 # NOTE: unable to map the following CMake package dependencies: CUDA HIP LLVM OpenCL Filesystem
 # NOTE: the following library dependencies are unknown, ignoring: LLVM- Y LLVM hiprtc
 #       (this is based on recipes that have previously been built and packaged)
-DEPENDS = "boost-native clang-native ocl-icd-native opencl-headers spirv-tools"
+DEPENDS = "boost-native clang-native ocl-icd-native opencl-headers"
 
-RDEPENDS:${PN} += "clang clang-libllvm clang-libclang-cpp virtual-opencl-icd python3-modules "
+# 
+RDEPENDS:${PN} += "clang clang-libllvm clang-libclang-cpp virtual-opencl-icd python3-modules spirv-llvm-translator"
+RDEPENDS:${PN}-dev += "clang clang-libllvm clang-libclang-cpp"
 
 inherit cmake pkgconfig
 
 # TODO how to prevent SPIRV from compiling
 
-FILES:${PN} += "${libdir}/hipSYCL/librt-backend-omp.so \
-    ${libdir}/hipSYCL/bitcode/libkernel-sscp-*.bc \
-    ${libdir}/hipSYCL/llvm-to-backend/libllvm-to-host.so \
-    ${libdir}/hipSYCL/llvm-to-backend/libllvm-to-spirv-tool.so \
-    ${libdir}/hipSYCL/llvm-to-backend/libllvm-to-backend.so \
-    ${libdir}/hipSYCL/llvm-to-backend/libllvm-to-spirv.so \
-    ${libdir}/hipSYCL/llvm-to-backend/llvm-to-host-tool \
-    ${libdir}/hipSYCL/llvm-to-backend/llvm-to-spirv-tool \
-    ${libdir}/hipSYCL/librt-backend-ocl.so \
-    ${libdir}/hipSYCL/librt-backend-omp.so \
-    ${libdir}/hipSYCL/ext/llvm-spirv/bin/llvm-spirv \
-    ${libdir}/hipSYCL/ext/llvm-spirv/include/LLVMSPIRVLib/LLVMSPIRVOpts.h \
-    ${libdir}/hipSYCL/ext/llvm-spirv/include/LLVMSPIRVLib/LLVMSPIRVLib.h \
-    ${libdir}/hipSYCL/ext/llvm-spirv/include/LLVMSPIRVLib/LLVMSPIRVExtensions.inc \
-    ${libdir}/hipSYCL/ext/llvm-spirv/lib/libLLVMSPIRVLib.a \
-    ${libdir}/hipSYCL/ext/llvm-spirv/lib/pkgconfig/LLVMSPIRVLib.pc \
-    ${sysconfdir}/AdaptiveCpp/acpp-core.json \
-    ${prefix}/etc/AdaptiveCpp/acpp-core.json"
+FILES:${PN} = "\
+    ${libdir}/hipSYCL/bitcode \
+    ${libdir}/hipSYCL/llvm-to-backend \
+    ${libdir}/hipSYCL/librt-backend-* \
+    "
 
+FILES:${PN}:remove = "${libdir}/hipSYCL/ext/ \
+    ${bindir}/acpp \
+    "
+
+FILES:${PN}-dev = "${libdir}/hipSYCL/ext/ \
+    ${includedir}/AdaptiveCpp \
+    ${bindir} \
+    ${libdir}/cmake \
+    ${libdir}/libacpp* \
+    ${sysconfdir}/AdaptiveCpp/acpp-core.json \
+    ${prefix}/etc/AdaptiveCpp/acpp-core.json \
+    "
 
 # Specify any options you want to pass to cmake using EXTRA_OECMAKE:
 EXTRA_OECMAKE = "-DWITH_OPENCL_BACKEND=ON -DFETCHCONTENT_FULLY_DISCONNECTED=OFF -DCLANG_RUNTIME_PATH=/usr/bin/clang++"
@@ -66,16 +66,10 @@ do_configure:prepend() {
     export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${STAGING_LIBDIR_NATIVE}/pkgconfig:${STAGING_DIR_NATIVE}/usr/share/pkgconfig"
 }
 
-# do_compile:prepend() {
-#     # So that clang++ if visible during the build and in target.
-#     export PATH="${PATH}:${STAGING_BINDIR_NATIVE}"
-# }
+INSANE_SKIP:${PN} = "buildpaths dev-deps"
+# INSANE_SKIP:${PN}-dbg = "buildpaths"
+INSANE_SKIP:${PN}-dev = "dev-elf staticdev"
 
-INSANE_SKIP:${PN} = "buildpaths dev-deps staticdev"
-INSANE_SKIP:${PN}-dbg = "buildpaths"
-INSANE_SKIP:${PN}-dev = "dev-elf"
-
-# Mot sure why those are needed. This configuration is supposed to be resolved.
 # Apparently sysroot are not forwarded to recipe-internal invocations of the compiler (e.g FetchContent, build, etc.)
 CFLAGS += " --sysroot=${RECIPE_SYSROOT}"
 CXXFLAGS += " --sysroot=${RECIPE_SYSROOT}"

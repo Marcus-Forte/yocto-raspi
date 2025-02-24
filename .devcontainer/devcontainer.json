@@ -5,7 +5,7 @@
 	"build": {
 		"context": "..",
 		"dockerfile": "Dockerfile",
-		"args": { "YOCTO_BRANCH": "styhead" }
+		"args": { "YOCTO_BRANCH": "scarthgap" }
 	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.

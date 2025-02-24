@@ -18,8 +18,8 @@ FILES:${PN} = "${systemd_unitdir}/network/20-wifi.network \
     ${sysconfdir}/wpa_supplicant/wpa_supplicant-wlan0.conf \
     ${systemd_system_unitdir}/enable-wifi.service \
 "
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${WORKDIR}"
+# UNPACKDIR = "${S}"
 
 SYSTEMD_SERVICE:${PN} = "enable-wifi.service"
 SYSTEMD_AUTO_ENABLE = "enable"

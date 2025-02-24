@@ -21,6 +21,6 @@ RUN mkdir /yocto && chown builduser /yocto && \
 
 USER builduser 
 RUN cd /yocto && git clone -b ${YOCTO_BRANCH} https://git.yoctoproject.org/poky && \
-    git clone -b master https://git.yoctoproject.org/meta-raspberrypi && \ 
+    git clone -b ${YOCTO_BRANCH} https://git.yoctoproject.org/meta-raspberrypi && \ 
     git clone -b ${YOCTO_BRANCH} https://github.com/kraj/meta-clang && \
     git clone -b ${YOCTO_BRANCH} git://git.openembedded.org/meta-openembedded
