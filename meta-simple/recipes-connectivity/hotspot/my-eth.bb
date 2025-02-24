@@ -9,8 +9,8 @@ RDEPENDS:${PN} = "systemd"
 SRC_URI = "file://10-eth.network \ 
 "
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${WORKDIR}"
+# UNPACKDIR = "${S}"
 
 FILES:${PN} = "${systemd_unitdir}/network/10-eth.network"
 
