@@ -17,6 +17,7 @@
 # licenses then you should change the value to separate the licenses with |
 # instead of &. If there is any doubt, check the accompanying documentation
 # to determine which situation is applicable.
+
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=f1e5cf2520dacf7c8b2461f6084bcc57 \
                     file://LICENSE;md5=f1e5cf2520dacf7c8b2461f6084bcc57 \
@@ -29,17 +30,12 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=f1e5cf2520dacf7c8b2461f6084bcc57 \
 
 SRC_URI = "git://github.com/pocl/pocl.git;protocol=https;branch=main"
 
-# Modify these as desired
 PV = "1.0+git"
 SRCREV = "3b6e5c4b47187d8a954194d673a47e6721e45719"
 
 S = "${WORKDIR}/git"
 
-# NOTE: unable to map the following CMake package dependencies: RDMAcm Python3 Doxygen onnxruntime TBB Verbs BLAS LIBJPEG_TURBO Vulkan OpenCV
-# NOTE: unable to map the following pkg-config dependencies: OpenCL ocl-icd lttng-ust
-#       (this is based on recipes that have previously been built and packaged)
-# NOTE: the following library dependencies are unknown, ignoring: irc S vulkan sleef svml REQUIRED ze_loader
-#       (this is based on recipes that have previously been built and packaged)
+##  This recipe is not working if built from x64 machine. ##
 DEPENDS += "hwloc clang-native spirv-llvm-translator-native"
 
 RDEPENDS:${PN} += "clang-libllvm clang-libclang-cpp clang virtual-opencl-icd spirv-llvm-translator"
@@ -51,18 +47,6 @@ EXTRA_OECMAKE = "-DENABLE_ICD=ON -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release"
 # EXTRA_OECMAKE:append:qemuarm64 = " -DLLC_HOST_CPU=A"
 # EXTRA_OECMAKE:append:qemux86-64 = " -DLLC_HOST_CPU=B"
 EXTRA_OECMAKE:append:raspberrypi5 = " -DLLC_TRIPLE=aarch64-linux-gnu -DLLC_HOST_CPU=cortex-a76"
-
-INSANE_SKIP:${PN} += "buildpaths"
-
-PROVIDES = "virtual/opencl"
-
-do_configure:prepend() {
-    export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${STAGING_LIBDIR_NATIVE}/pkgconfig:${STAGING_DIR_NATIVE}/usr/share/pkgconfig"
-}
-
-# Not sure why those are needed. This configuration is supposed to be resolved.
-CFLAGS += " -I${STAGING_INCDIR_NATIVE}"
-CXXFLAGS += " -I${STAGING_INCDIR_NATIVE}"
 
 
 # Important envs to set in runtime
